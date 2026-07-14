@@ -6,3 +6,4 @@ __pycache__/
 venv/
 *.mp4
 !examples/*.mp4
+_worker.log

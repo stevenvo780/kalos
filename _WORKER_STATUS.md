@@ -1,6 +1,6 @@
 # kalos catalog worker
 
-- Phase: Wave A — implementation
+- Phase: Wave B — full catalog rendering
 - Branch: `master` tracking `origin/master`
 - Baseline: 3 registered scenes
 - Contract reviewed: generator → finite float32 `(H,W)` field → grade → Reel
@@ -10,4 +10,5 @@
 - MP4 smoke: 55/55 pass (2 s × 12 fps, 96×54 grid → 1080×1920)
 - Visual pass: all 55 reviewed; 6 weak scenes retuned and now pass final recheck
 - Dropped: none
-- Next: commit/push Wave A, then full-quality parallel renders + curation
+- Wave A checkpoint: 5 coherent commits pushed to `origin/master` at `643be25`
+- Next: parallel 12 s × 30 fps renders, inspect, poster/copy, README, final push
