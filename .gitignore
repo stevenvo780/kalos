@@ -1,0 +1,8 @@
+out/
+**/.frames_*/
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.mp4
+!examples/*.mp4
