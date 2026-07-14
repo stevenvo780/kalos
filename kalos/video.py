@@ -17,17 +17,20 @@ class Reel:
         self.i = 0
 
     def add(self, rgb: np.ndarray) -> None:
-        img = Image.fromarray(rgb, "RGB")
-        if img.size != (REEL_W, REEL_H):
-            img = img.resize((REEL_W, REEL_H), Image.LANCZOS)
-        img.save(self.tmp / f"f{self.i:05d}.png")
+        # frames are saved at their native (possibly half) res; encode() scales
+        # to 1080x1920 with lanczos so grain gets averaged on the way up.
+        Image.fromarray(rgb, "RGB").save(self.tmp / f"f{self.i:05d}.png")
         self.i += 1
 
-    def encode(self, crf: int = 18) -> Path:
+    def encode(self, crf: int = 26, denoise: str = "hqdn3d=2:1.5:6:6") -> Path:
         self.out.parent.mkdir(parents=True, exist_ok=True)
+        vf = ["scale=%d:%d:flags=lanczos" % (REEL_W, REEL_H)]
+        if denoise:
+            vf.append(denoise)
         cmd = [
             "ffmpeg", "-y", "-framerate", str(self.fps),
             "-i", str(self.tmp / "f%05d.png"),
+            "-vf", ",".join(vf),
             "-c:v", "libx264", "-preset", "slow", "-crf", str(crf),
             "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(self.out),
         ]

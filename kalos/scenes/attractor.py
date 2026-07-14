@@ -32,8 +32,10 @@ def frames(kind="de_jong", n_frames=300, size=(1920, 1080), points=1_500_000,
     xr = (-3.6 * aspect, 3.6 * aspect)
     M = 20_000
     K = max(1, points // M)
-    rng = np.random.default_rng(seed)
     for i in range(n_frames):
+        # reset seed each frame: identical sampling pattern -> temporally coherent
+        # grain (only the deterministic param morph moves) -> compresses cleanly.
+        rng = np.random.default_rng(seed)
         t = i / n_frames
         a = base[0] + amp[0] * np.sin(2 * np.pi * t + phase[0])
         b = base[1] + amp[1] * np.sin(2 * np.pi * t + phase[1])

@@ -15,8 +15,10 @@ from kalos.video import Reel, REEL_W, REEL_H
 from kalos.grade import grade
 from kalos.scenes import attractor, harmonograph
 
-# internal render grid (H, W); upscaled to 1080x1920 on encode
-GRID = (REEL_H, REEL_W)
+# internal render grid (H, W); upscaled to 1080x1920 on encode.
+# half-res averages histogram grain (smoother + far smaller files); LANCZOS
+# upscale keeps the glow crisp.
+GRID = (REEL_H // 2, REEL_W // 2)
 
 SCENES = {
     "attractor-dejong": dict(
