@@ -83,7 +83,10 @@ def main(argv: list[str] | None = None) -> int:
                 continue
             if status == "FAIL":
                 failures += 1
-            relative_log = log_path.relative_to(ROOT)
+            try:
+                relative_log = log_path.relative_to(ROOT)
+            except ValueError:
+                relative_log = log_path
             print(f"{status} {name} ({elapsed:.1f}s) log={relative_log}", flush=True)
     return 1 if failures else 0
 
